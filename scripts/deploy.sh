@@ -3,7 +3,7 @@
 # DEPLOY LARAVEL APP AND DO FULL INSTALL
 # This deploy has almost zero downtime.
 # Instead of updating the currently-running version,
-# it checks out a new clone of the master branch and builds it in a timestamped folder, then
+# it checks out a new clone of the passed in branch and builds it in a timestamped folder, then
 # recreates a symlink at the very end.
 
 # This script assumes you have put your production .env file in your WORKING_DIR folder and your master branch has been commited with all npm assets compiled (npm run production).

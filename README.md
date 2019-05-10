@@ -3,7 +3,7 @@ Shell scripts to manage Laravel app deployment on an Linux server running Nginx.
 
 ## Overview
 
-The deploy script will deploy a Laravel application with almost zero downtime. Instead of updating the currently-running version, it checks out a new clone of the master branch and builds it in a timestamped folder, then recreates a symlink at the very end. The symlink represents your root folder.
+The deploy script will deploy a Laravel application with almost zero downtime. Instead of updating the currently-running version, it checks out a new clone of the passed in branch and builds it in a timestamped folder, then recreates a symlink at the very end. The symlink represents your root folder.
 
 ## Installation
 * SSH into your server. Copy the deploy.sh script to your linux server at /usr/local/bin/ in a file called deploy. Copy the revert.sh script to your linux server at /usr/local/bin/ in a file called revert. Make both files executable.
