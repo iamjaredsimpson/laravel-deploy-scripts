@@ -20,7 +20,7 @@ sudo chmod +x /usr/local/bin/deploy /usr/local/bin/revert
 
 Note: this script will not run database migrations.
 
-## HOW TO DEPLOY
+## How to Deploy
 Once the script is installed, you can run the script with the following command format
 ```
 deploy app-name branch-name
@@ -33,12 +33,12 @@ OR
 deploy app-name staging
 ```
 
-# RESULT
+## Results of Deployment
 The script will take "app-name" and create a folder formated with the time, such as app-name-2019_01_01-15-34-65. Inside this folder, it will clone your repository branch. Once that is finished, it will run composer, update permissions, copy your .env file, and restart your server. Finally, it will create a symlink with the title of your app-name and point it at this new folder. 
 
 By doing this, you still have your previous build and can revert it back if needed. 
 
-# HOW TO REVERT TO A PREVIOUS DEPLOYMENT
+## How to Revert Back to a Previous Deployment
 All you have to do is run the revert command with the following format
 ```
 revert app-name app-folder
