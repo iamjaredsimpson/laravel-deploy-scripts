@@ -31,6 +31,11 @@ cd ${APP_DIR}
 echo -e "\n\n====> Installing composer dependencies...\n\n"
 composer install --no-interaction --no-dev --prefer-dist
 
+echo -e "\n\n====> Copying Public/Private Storage...\n\n"
+cp -R ${WORKING_DIR}/${APP}/storage/app/public ${APP_DIR}/storage/app/
+cp -R ${WORKING_DIR}/${APP}/storage/app/private ${APP_DIR}/storage/app/
+/usr/bin/php $APP_DIR/artisan storage:link
+
 echo -e "\n\n====> Modifying permissions...\n\n"
 sudo touch $APP_DIR/storage/logs/laravel.log
 sudo touch $APP_DIR/storage/logs/laravel.json
