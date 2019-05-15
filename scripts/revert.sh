@@ -19,4 +19,7 @@ cd $WORKING_DIR
 
 sudo rm -rf ${WORKING_DIR}/${APP} && ln -s ${WORKING_DIR}/${FOLDER}/${APP} ${WORKING_DIR}/${APP}
 
+#delete old site?
+# readlink -f ${APP} | sudo rm -rf
+
 echo -e "\n====> Site Reverted Successfully.\n\n"

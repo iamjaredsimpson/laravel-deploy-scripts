@@ -7,13 +7,13 @@
 # recreates a symlink at the very end.
 
 # This script assumes you have put your production .env file in your WORKING_DIR folder and your master branch has been commited with all npm assets compiled (npm run production).
-# We have the file at /usr/local/bin/deploy and executable.
+# We have the file at /usr/local/bin/git-deploy and executable.
 # Also you’ll need to use a deploy key for ssh access to your repo.
-#> deploy git_reponame time_string
+#> git-deploy git_reponame time_string
 
 if (( $# < 2 )); then
-        echo "Deploy Script requires an app name and a time string. The app name should match your git repository name."
-        exit 1
+    echo "Deploy Script requires an app name and a time string. The app name should match your git repository name."
+    exit 1
 fi
 
 #UPDATE THIS
@@ -52,17 +52,21 @@ sudo service php7.1-fpm restart
 
 which nginx > /dev/null 2>&1
 if [ $? == 0 ]; then
-        echo -e "\n====> Restarting nginx...\n"
-        sudo service nginx restart
+    echo -e "\n====> Restarting nginx...\n"
+    sudo service nginx restart
 fi
 
 which supervisord > /dev/null 2>&1
 if [ $? == 0 ]; then
-        echo -e "\n====> Restarting supervisord...\n"
-        sudo service supervisor restart
+    echo -e "\n====> Restarting supervisord...\n"
+    sudo service supervisor restart
 fi
 
 echo -e "\n====> Updating Symlink...\n"
 sudo rm -rf ${WORKING_DIR}/${APP} && ln -s $APP_DIR ${WORKING_DIR}/${APP}
+
+echo -e "\n====> Deleting Old Site Clones...\n"
+cd $WORKING_DIR
+ls -dt */ | tail -n +7 | xargs rm -rf
 
 echo -e "\n\n====> Site Deployed Successfully.\n\n"
