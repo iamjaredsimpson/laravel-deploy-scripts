@@ -53,7 +53,7 @@ echo -e "\n\n====> Modifying permissions...\n\n"
 sudo touch $APP_DIR/storage/logs/laravel.log
 sudo touch $APP_DIR/storage/logs/laravel.json
 sudo mkdir -p $APP_DIR/storage/framework/cache/data
-sudo chown -R wwworkshop-staging:www-data $APP_DIR
+sudo chown -R ${SERVER_USER}:www-data $APP_DIR
 sudo chmod -R 2777 $APP_DIR/storage
 
 echo -e "\n\n====> Caching Configs...\n\n"
