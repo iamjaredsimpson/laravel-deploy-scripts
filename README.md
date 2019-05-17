@@ -29,14 +29,14 @@ sudo chmod +x /usr/local/bin/manual-deploy /usr/local/bin/revert /usr/local/bin/
 * Go to your root file and create a bare git repository. **Be sure to update sitename.git**
 ```
 cd ~
-mkdir **sitename.git**
-cd **sitename.git**
+mkdir sitename.git
+cd sitename.git
 git init --bare
 ```
 
 * Open the post-receive file. **Be sure to update sitename.git**
 ```
-sudo nano ~/**sitename.git**/hooks/post-receive
+sudo nano ~/sitename.git/hooks/post-receive
 ```
 
 * Insert the following.
@@ -46,25 +46,26 @@ git-post-receive
 
 * Make post-receive file executable. **Be sure to update sitename.git**
 ```
-sudo chmod +x ~/**sitename.git**/hooks/post-receive
+sudo chmod +x ~/sitename.git/hooks/post-receive
 ```
 
 * Allow git-deploy script to function without entering a sudo password. **Be sure to update LINUX_USERNAME to your user or group.**
 ```
-sudo vimudo
-**LINUX_USERNAME** ALL=NOPASSWD: /usr/local/bin/git-deploy *
+sudo visudo
+LINUX_USERNAME ALL=NOPASSWD: /usr/local/bin/git-deploy *
 ```
 
 * Exit the server
 * On your local machine, navigate in terminal to your project repository.
 * Add a remote repository. **Be sure to update your ssh information.**
 ```
-git remote add **REMOTE_NAME** ssh://**username**@**ip.address**/home/**sitename/sitename**.git
+git remote add REMOTE_NAME 
+ssh://username@ip.address/home/sitename/sitename.git
 ```
 
 *Thats it! You should be able to now run the following command from your repository folder on your local machine.
 ```
-git push **REMOTE_NAME** **BRANCH_TO_PUSH**
+git push REMOTE_NAME BRANCH_TO_PUSH
 ```
 
 ## How to Manually Deploy
