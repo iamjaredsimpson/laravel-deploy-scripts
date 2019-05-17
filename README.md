@@ -3,7 +3,7 @@ Shell scripts to manage Laravel app deployment on an Linux server running Nginx.
 
 ## Overview
 
-The deploy script will deploy a Laravel application with almost zero downtime. Instead of updating the currently running version, it checks out a new clone of the passed in branch and builds it in a timestamped folder, then recreates a symlink at the very end. The symlink represents the root folder of your website.
+The deploy script will deploy a Laravel application with almost zero downtime. Instead of updating the currently running version, it checks out a new clone of the passed in branch and builds it in a timestamped folder, then recreates a symlink at the very end. The symlink represents the root folder of your website. It will only keep 5 copies of the site and will delete any sites older than the fifth.
 
 ## Assumptions
 * On your Linux server, you must have your root folder be the same name as your git repository name. For example, your root could be located at /var/www/html/app-name. This folder will actually be a symlink to the current build.
