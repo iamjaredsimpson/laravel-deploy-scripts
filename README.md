@@ -1,5 +1,5 @@
 # laravel-deploy-scripts
-Shell scripts to manage Laravel app deployment on an Linux server running Nginx. This was built for Laravel 5.8, but should work with any version 5.0+. There are currently three scripts, two to deploy and one to revert to a previous deployment. There is also .env example file for your custom variables.
+Shell scripts to manage Laravel app deployment on an Linux server running Nginx. This was built for Laravel 5.8, but should work with any version 5.0+. There are currently three main scripts, two to deploy and one to revert to a previous deployment. There is also .env example file for your custom variables and a script to handle the git post-receive hook.
 
 ## Overview
 
