@@ -13,5 +13,7 @@ APP=GIT_REPOSITORY_NAME
 # For example, the root directory below would be /var/www/html/git_repository_name
 WORKING_DIR=/var/www/html
 
+SERVER_USER=USERNAME
+
 # Installed php service. This is will be used to restart php.
 PHP=php7.1-fpm
