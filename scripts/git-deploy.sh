@@ -11,15 +11,28 @@
 # Also you’ll need to use a deploy key for ssh access to your repo.
 #> git-deploy git_reponame time_string
 
-if (( $# < 2 )); then
-    echo "Deploy Script requires an app name and a time string. The app name should match your git repository name."
+if (( $# < 1 )); then
+    echo "Deploy Script requires a time string."
     exit 1
 fi
 
-#UPDATE THIS
-WORKING_DIR=/var/www/html
+# Get the directory of the currently executing script
+DIR="$(dirname "${BASH_SOURCE[0]}")"
 
-APP=$1 TIME=$2 FOLDER=${APP}-${TIME} APP_DIR=${WORKING_DIR}/${FOLDER}
+# Include files
+INCLUDE_FILES=(
+    ".env.sh"
+)
+for INCLUDE_FILE in "${INCLUDE_FILES[@]}"
+do
+    if [[ ! -f "${DIR}/${INCLUDE_FILE}" ]] ; then
+        echo "File ${DIR}/${INCLUDE_FILE} is missing, aborting."
+        exit 1
+    fi
+    source "${DIR}/${INCLUDE_FILE}"
+done
+
+TIME=$1 FOLDER=${APP}-${TIME} APP_DIR=${WORKING_DIR}/${FOLDER}
 
 echo -e "\n\n====> Creating .env file\n"
 
@@ -48,7 +61,7 @@ echo -e "\n\n====> Caching Configs...\n\n"
 /usr/bin/php $APP_DIR/artisan config:cache
 
 echo -e "\n\n====> Restarting php-fpm...\n"
-sudo service php7.1-fpm restart
+sudo service ${PHP} restart
 
 which nginx > /dev/null 2>&1
 if [ $? == 0 ]; then
@@ -67,6 +80,6 @@ sudo rm -rf ${WORKING_DIR}/${APP} && ln -s $APP_DIR ${WORKING_DIR}/${APP}
 
 echo -e "\n====> Deleting Old Site Clones...\n"
 cd $WORKING_DIR
-ls -dt */ | tail -n +7 | xargs rm -rf
+sudo ls -dt */ | tail -n +7 | xargs rm -rf
 
 echo -e "\n\n====> Site Deployed Successfully.\n\n"

@@ -11,15 +11,29 @@
 # Also you’ll need to use a deploy key for ssh access to your repo.
 #> deploy git_reponame
 
-if (( $# < 2 )); then
-        echo "Deploy Script requires an app name and a branch. The app name should match your git repository name."
+if (( $# < 1 )); then
+        echo "Deploy Script requires a repository branch."
         exit 1
 fi
 
-#UPDATE THESE
-ACCOUNT="GIT_USERNAME" WORKING_DIR=/var/www/html
+# Get the directory of the currently executing script
+DIR="$(dirname "${BASH_SOURCE[0]}")"
 
-APP=$1 BRANCH=$2 TIME=$(date +%Y_%m_%d-%H_%M_%S) FOLDER=${APP}-${TIME} APP_DIR=${WORKING_DIR}/${FOLDER}/${APP}
+# Include files
+# Include files
+INCLUDE_FILES=(
+    ".env.sh"
+)
+for INCLUDE_FILE in "${INCLUDE_FILES[@]}"
+do
+    if [[ ! -f "${DIR}/${INCLUDE_FILE}" ]] ; then
+        echo "File ${DIR}/${INCLUDE_FILE} is missing, aborting."
+        exit 1
+    fi
+    source "${DIR}/${INCLUDE_FILE}"
+done
+
+BRANCH=$1 TIME=$(date +%Y_%m_%d-%H_%M_%S) FOLDER=${APP}-${TIME} APP_DIR=${WORKING_DIR}/${FOLDER}
 
 echo -e "\n\n====> Building $FOLDER from $ACCOUNT.github.com:$ACCOUNT/$APP\n"
 
@@ -33,12 +47,20 @@ if [ ! -d "${WORKING_DIR}/${FOLDER}" ]; then
 fi
 
 cd ${WORKING_DIR}
-touch ${APP_DIR}/.env
-cp .env ${APP_DIR}/.env
+touch ${APP_DIR}/${APP}/.env
+cp .env ${APP_DIR}/${APP}/.env
+
+cp -R ${APP_DIR}/${APP}/. $APP_DIR/
+sudo rm -rf ${APP_DIR}/${APP}
 
 cd ${APP_DIR}
 echo -e "\n\n====> Installing composer dependencies...\n\n"
 composer install --no-interaction --no-dev --prefer-dist
+
+echo -e "\n\n====> Copying Public/Private Storage...\n\n"
+cp -R ${WORKING_DIR}/${APP}/storage/app/public ${APP_DIR}/storage/app/
+cp -R ${WORKING_DIR}/${APP}/storage/app/private ${APP_DIR}/storage/app/
+/usr/bin/php $APP_DIR/artisan storage:link
 
 echo -e "\n\n====> Modifying permissions...\n\n"
 sudo touch $APP_DIR/storage/logs/laravel.log
@@ -52,7 +74,7 @@ echo -e "\n\n====> Caching Configs...\n\n"
 /usr/bin/php $APP_DIR/artisan config:cache
 
 echo -e "\n\n====> Restarting php-fpm...\n"
-sudo service php7.1-fpm restart
+sudo service ${PHP} restart
 
 which nginx > /dev/null 2>&1
 if [ $? == 0 ]; then
@@ -69,7 +91,11 @@ fi
 echo -e "\n====> Updating Symlink...\n"
 sudo rm -rf ${WORKING_DIR}/${APP} && ln -s $APP_DIR ${WORKING_DIR}/${APP}
 
-echo -e "\n====> Listing directory contents for ${FOLDER}/${APP}\n\n"
+echo -e "\n====> Deleting Old Site Clones...\n"
+cd $WORKING_DIR
+sudo ls -dt */ | tail -n +7 | xargs rm -rf
+
+echo -e "\n====> Listing directory contents for ${FOLDER}\n\n"
 
 ls -alrth "${APP_DIR}"
 
