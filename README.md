@@ -43,7 +43,7 @@ git remote add REMOTE_NAME
 ssh://username@ip.address/home/sitename/sitename.git
 ```
 
-*Thats it! You should be able to now run the following command from your repository folder on your local machine.
+* Thats it! You should be able to now run the following command from your repository folder on your local machine.
 ```
 git push REMOTE_NAME BRANCH_TO_PUSH
 ```
