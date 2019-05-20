@@ -7,7 +7,7 @@ The deploy script will deploy a Laravel application with almost zero downtime. I
 
 ## Assumptions
 * I assume that you already have a non root sudo user on your server and that everything is already set up to serve your website. That meaning PHP, MySQL, Ngnix are already installed and working properly.
-* Nginx must have your root folder be the same name as your git repository name. For example, your root could be located at /var/www/html/app-name. This folder will actually be a symlink to the current build.
+* Nginx must have your root folder be the same name as your git repository name. For example, your root could be located at /var/www/html/app-name/public. This folder will actually be a symlink to the current build.
 * In your working directory (/var/www/html in the previous example), you must place your production .env file. The contents of this file will be copied to every clone you make. This will most likely be the only file in this directory until you make a deployment.
 * You’ll need to attach a SSH key to your git repository so that the git-deploy/post-receive scripts can access your repo.
 
