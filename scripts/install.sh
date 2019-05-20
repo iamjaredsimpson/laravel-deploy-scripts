@@ -34,7 +34,6 @@ then
 	echo "git-post-receive" >> ~/${APP}.git/hooks/post-receive
 	sudo chmod +x ~/${APP}.git/hooks/post-receive
 
-	sudo visudo
 	echo ${SERVER_USER}	'ALL=NOPASSWD: /usr/local/bin/git-deploy *' | sudo EDITOR='tee -a' visudo
 else
 	REMOTE=$1
