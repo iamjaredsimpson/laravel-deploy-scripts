@@ -1,5 +1,4 @@
-# This file should be renamed to '.env.sh' and it should reside in the
-# `scripts` directory.  Add '.env.sh' to your .gitignore.
+# This file should be renamed to '.env.sh' and it should reside in the scripts directory.
 
 # -- GLOBAL Settings --
 
@@ -13,7 +12,8 @@ APP=GIT_REPOSITORY_NAME
 # For example, the root directory below would be /var/www/html/git_repository_name
 WORKING_DIR=/var/www/html
 
+# The server user that will be running the commands.
 SERVER_USER=USERNAME
 
 # Installed php service. This is will be used to restart php.
-PHP=php7.1-fpm
+PHP=php7.2-fpm

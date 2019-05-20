@@ -6,15 +6,15 @@ Shell scripts to manage Laravel app deployment on an Linux server running Nginx.
 The deploy script will deploy a Laravel application with almost zero downtime. Instead of updating the currently running version, it checks out a new clone of the passed in branch and builds it in a timestamped folder, then recreates a symlink at the very end. The symlink represents the root folder of your website. It will only keep 5 copies of the site and will delete any sites older than the fifth.
 
 ## Assumptions
-* I assume that you already have a non root sudo user on your server and that everything is already set up to server your website. That meaning PHP, MySQL, Ngnix are already installed and working properly.
-* On your Linux server, you must have your root folder be the same name as your git repository name. For example, your root could be located at /var/www/html/app-name. This folder will actually be a symlink to the current build.
-* In your working directory (/var/www/html in the previous example), you must place your production .env file. The contents of this file will be copied to every clone you make.
+* I assume that you already have a non root sudo user on your server and that everything is already set up to serve your website. That meaning PHP, MySQL, Ngnix are already installed and working properly.
+* Nginx must have your root folder be the same name as your git repository name. For example, your root could be located at /var/www/html/app-name. This folder will actually be a symlink to the current build.
+* In your working directory (/var/www/html in the previous example), you must place your production .env file. The contents of this file will be copied to every clone you make. This will most likely be the only file in this directory until you make a deployment.
 * You’ll need to attach a SSH key to your git repository so that the git-deploy/post-receive scripts can access your repo.
 
 Note: this script will not run database migrations.
 
 ## Installation
-* Clone scripts Repository.
+* Clone scripts repository.
 * Rename example.env.sh to .env.sh
 * Update the variables in .env.sh
 
