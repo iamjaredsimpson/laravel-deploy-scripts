@@ -52,6 +52,9 @@ git push REMOTE_NAME BRANCH_TO_PUSH
 The manual deploy script allows you to clone a repository branch without having to set up a git remote or have changes in your repository. 
 
 If you didn't run the install script, do the following.
+* Clone scripts repository.
+* Rename example.env.sh to .env.sh
+* Update the variables in .env.sh
 * Remove .sh from all filenames except .env.sh.
 * SFTP into your server. Copy the .env.sh, manual-deploy, and revert to your Linux server at /usr/local/bin/. 
 * Exit
