@@ -53,13 +53,13 @@ The manual deploy script allows you to clone a repository branch without having 
 
 If you didn't run the install script, do the following.
 * Remove .sh from all filenames except .env.sh.
-* SFTP into your server. Copy the scripts to your Linux server at /usr/local/bin/. 
+* SFTP into your server. Copy the .env.sh, manual-deploy, and revert to your Linux server at /usr/local/bin/. 
 * Exit
 * SSH into the server.
 * Make script files executable.
 
 ```
-sudo chmod +x /usr/local/bin/manual-deploy /usr/local/bin/revert /usr/local/bin/git-deploy /usr/local/bin/git-post-receive
+sudo chmod +x /usr/local/bin/manual-deploy /usr/local/bin/revert
 ```
 
 Once that is done, you can run the manual deploy script with the following command format.
